@@ -22,15 +22,15 @@ export class GlycoseReadingServiceService {
     return this.http.get<GlucoseReading>(`${this.apiUrl}/${id}`);
   }
 
-  create(reading: GlucoseReading): Observable<GlucoseReading> {
-    return this.http.post<GlucoseReading>(this.apiUrl, reading);
+  public create(reading: GlucoseReading): Observable<GlucoseReading> {
+    return this.http.post<GlucoseReading>(`${this.apiUrl}/save`, reading);
   }
 
-  update(reading: GlucoseReading): Observable<GlucoseReading> {
-    return this.http.put<GlucoseReading>(`${this.apiUrl}/${reading.glucoseReadingId}`, reading);
+  public update(reading: GlucoseReading): Observable<GlucoseReading> {
+    return this.http.put<GlucoseReading>(`${this.apiUrl}/update`, reading);
   }
 
-  delete(id: number | undefined): Observable<void> {
+  public delete(id: number | undefined): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

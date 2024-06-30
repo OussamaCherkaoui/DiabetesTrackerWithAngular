@@ -17,21 +17,21 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/glucoseReadings")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class GlucoseReadingController {
 
     @Autowired
     private GlucoseReadingService glucoseReadingService;
 
-    @GetMapping("/")
+    @GetMapping
     public List<GlucoseReading> getAllGlucoseReadings() {
         return glucoseReadingService.getAllGlucoseReadings();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GlucoseReading> getGlucoseReadingsById(@PathVariable Integer glucoseReadingId) {
-        return ResponseEntity.of(glucoseReadingService.getGlucoseReadingById(glucoseReadingId));
+    public ResponseEntity<GlucoseReading> getGlucoseReadingsById(@PathVariable Integer id) {
+        return ResponseEntity.of(glucoseReadingService.getGlucoseReadingById(id));
     }
 
     @PostMapping("/save")
@@ -46,9 +46,14 @@ public class GlucoseReadingController {
         return new ResponseEntity<>(updateGlucoseReading, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<GlucoseReading> deleteGlucoseReading(@RequestParam(name ="glucoseReadingId") Integer glucoseReadingId) {
-        GlucoseReading deletedGlucoseReading = glucoseReadingService.deleteGlucoseReadingById(glucoseReadingId);
-        return new ResponseEntity<>(deletedGlucoseReading, HttpStatus.OK);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteGlucoseReading(@PathVariable Integer id) {
+        try {
+            GlucoseReading deletedGlucoseReading = glucoseReadingService.deleteGlucoseReadingById(id);
+            return new ResponseEntity<>(deletedGlucoseReading, HttpStatus.OK);
+        } catch (Exception e) {
+            System.err.println("Error deleting glucose reading: " + e.getMessage());
+            return new ResponseEntity<>("Error deleting glucose reading", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

@@ -33,7 +33,12 @@ public class GlucoseReadingService {
     }
 
     public GlucoseReading deleteGlucoseReadingById(Integer id) {
-        glucoseReadingRepository.deleteById(id);
-        return glucoseReadingRepository.findById(id).get();
+        Optional<GlucoseReading> optionalGlucoseReading = glucoseReadingRepository.findById(id);
+        if (optionalGlucoseReading.isPresent()) {
+            glucoseReadingRepository.deleteById(id);
+            return optionalGlucoseReading.get();
+        } else {
+            throw new RuntimeException("Glucose reading not found with id " + id);
+        }
     }
 }

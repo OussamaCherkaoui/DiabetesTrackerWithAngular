@@ -1,4 +1,4 @@
-<div class="col-md-8 d-flex justify-content-center align-items-center">
+<div class="col-md-8 mx-auto mt-5">
   <div class="table-responsive">
     <table class="table table-bordered table-striped text-center">
       <thead class="thead-dark">
@@ -20,7 +20,7 @@
               <td>{{glycoseReading.comment}}</td>
               <td>
                   <button (click)="deleteGlycose(glycoseReading.glucoseReadingId)" class="btn btn-danger btn-sm">Supprimer</button>
-                  <button class="btn btn-primary btn-sm">Modifier</button>
+                  <button (click)="updateGlycose(glycoseReading.glucoseReadingId)" class="btn btn-primary btn-sm">Modifier</button>
               </td>
             </tr>
           }

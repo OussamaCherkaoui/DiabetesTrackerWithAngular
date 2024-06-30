@@ -4,22 +4,22 @@
 <div class="row gap-5 mb-3 m-0">
   <div class="row justify-content-center text-black">
     <div class="col-md-6">
-      <form id="glycemieForm" method="post" action="ajouterGlycemie">
+      <form (ngSubmit)="createGlycoseReading()" #glycemieForm="ngForm">
         <div class="form-group mb-1">
           <label for="dateEtHeure">Date et Heure</label>
-          <input type="datetime-local" class="form-control" id="dateEtHeure" name="dateEtHeure" required>
+          <input type="datetime-local" class="form-control" id="dateEtHeure" [(ngModel)]="newGlycoseReading.dateAndTime" name="dateEtHeure" required>
         </div>
         <div class="form-group mb-1">
           <label for="niveau">Niveau</label>
-          <input type="number" class="form-control" id="niveau" name="niveau" required>
+          <input type="number" class="form-control" id="niveau" [(ngModel)]="newGlycoseReading.level" name="niveau" required>
         </div>
         <div class="form-group mb-1">
           <label for="typeMesure">Type de Mesure</label>
-          <input type="text" class="form-control" id="typeMesure" name="typeMesure" required>
+          <input type="text" class="form-control" id="typeMesure" [(ngModel)]="newGlycoseReading.measurementType" name="typeMesure" required>
         </div>
         <div class="form-group mb-3">
           <label for="commentaire">Commentaire</label>
-          <textarea class="form-control" id="commentaire" name="commentaire" rows="3" required></textarea>
+          <textarea class="form-control" id="commentaire" [(ngModel)]="newGlycoseReading.comment" name="commentaire" rows="3" required></textarea>
         </div>
         <button type="submit" class="btn btn-block" style="background-color:#FFDFB9">Ajouter Glycémie</button>
       </form>

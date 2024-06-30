@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {GlucoseReading} from "../../models/glucose-reading";
 import {GlycoseReadingServiceService} from "../../services/glycose-reading-service.service";
 import {NgFor,NgIf} from "@angular/common";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-glycemies',
@@ -13,7 +14,7 @@ import {NgFor,NgIf} from "@angular/common";
 export class GlycemiesComponent implements OnInit{
   glycosesReading: GlucoseReading[] = [];
 
-  constructor(private glycoseReadingService: GlycoseReadingServiceService) {}
+  constructor(private glycoseReadingService: GlycoseReadingServiceService,private router: Router) {}
 
   ngOnInit(): void {
     this.loadGlycoses();
@@ -21,19 +22,17 @@ export class GlycemiesComponent implements OnInit{
 
   loadGlycoses(): void {
     this.glycoseReadingService.getAll().subscribe(data => {
-      console.log(data._embedded.glucoseReadings)
-      this.glycosesReading = data._embedded.glucoseReadings;
+      this.glycosesReading = data;
     });
   }
 
   deleteGlycose(id: number | undefined): void {
-    if (id === undefined) {
-      console.error('ID is undefined');
-      return;
-    }
-
     this.glycoseReadingService.delete(id).subscribe(() => {
       this.loadGlycoses();
     });
+  }
+
+  updateGlycose(glucoseReadingId: number | undefined) {
+    this.router.navigate(['/modifierGlycemie',glucoseReadingId]);
   }
 }
